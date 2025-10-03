@@ -1,6 +1,6 @@
-# 🧪 Vision Transformer Experiments on CIFAR-10
+#  Q1 ViT
 
-This repository documents a series of systematic experiments conducted on CIFAR-10 to understand the training dynamics and performance behavior of Vision Transformers (ViTs) and their hybrid variants. The objective was not to reach state-of-the-art accuracy, but to explore **how different architectural and training modifications influence model performance** under limited compute.
+Documents a series of systematic experiments conducted on CIFAR-10 to understand the training dynamics and performance behavior of Vision Transformers (ViTs) and their hybrid variants. The objective was not to reach state-of-the-art accuracy, but to explore **how different architectural and training modifications influence model performance** under limited compute.
 
 ---
 
