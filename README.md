@@ -4,7 +4,7 @@ Documents a series of systematic experiments conducted on CIFAR-10 to understand
 
 ---
 
-## 1️⃣ Baseline ViT
+## 1️ Baseline ViT
 
 - Implemented a **custom Vision Transformer** from scratch: patch embedding, positional embeddings, class token, and Transformer encoder blocks with pre-layer normalization and learnable gamma scaling.  
 - Trained with standard AdamW and cosine learning rate schedule.  
@@ -13,7 +13,7 @@ Documents a series of systematic experiments conducted on CIFAR-10 to understand
 
 ---
 
-## 2️⃣ Data Augmentation & Regularization
+## 2️ Data Augmentation & Regularization
 
 - Added **Mixup** and **CutMix** per batch.  
 - Used **RandomCrop**, **RandomHorizontalFlip**, **ColorJitter**, and **RandomErasing**.  
@@ -23,7 +23,7 @@ Documents a series of systematic experiments conducted on CIFAR-10 to understand
 
 ---
 
-## 3️⃣ Hybrid CNN + Transformer
+## 3️ Hybrid CNN + Transformer
 
 - Replaced the patch embedding with a **ResNet-18 backbone** to extract convolutional features.  
 - Fed the resulting feature maps into a Transformer encoder (PyTorch implementation).  
@@ -32,7 +32,7 @@ Documents a series of systematic experiments conducted on CIFAR-10 to understand
 
 ---
 
-## 4️⃣ Explicit Transformer Implementation
+## 4️ Explicit Transformer Implementation
 
 - Replaced the built-in Transformer API with **manually coded attention and MLP blocks**, closely following the original ViT paper structure.  
 - Incorporated **Pre-Norm**, learnable scaling (γ), and residual connections carefully.  
@@ -40,7 +40,7 @@ Documents a series of systematic experiments conducted on CIFAR-10 to understand
 
 ---
 
-### 🧠 5️⃣ Knowledge Distillation
+###  Knowledge Distillation
 
 I experimented with **knowledge distillation** using a **ResNet-18 teacher** trained on CIFAR-10 and a **ViT student**. The training used a combination of **KL divergence** and **cross-entropy loss** with temperature scaling.
 
