@@ -40,13 +40,13 @@ This repository documents a series of systematic experiments conducted on CIFAR-
 
 ---
 
-## 5️⃣ Knowledge Distillation
+### 🧠 5️⃣ Knowledge Distillation
 
-- Used a **ResNet-18 teacher** trained on CIFAR-10.  
-- ViT as the **student**, trained using KL divergence + cross-entropy loss with temperature scaling.  
-- **Accuracy:** ~86%  
-- **Observation:** Distillation led to a noticeable boost. The student model benefited from the richer supervision of the teacher, improving generalization without increasing the student’s complexity.
+I experimented with **knowledge distillation** using a **ResNet-18 teacher** trained on CIFAR-10 and a **ViT student**. The training used a combination of **KL divergence** and **cross-entropy loss** with temperature scaling.
 
+However, the **student model only achieved 86% accuracy**, whereas the **hybrid CNN+ViT feature mapping approach** reached **87% accuracy**.
+
+**Observation:** In this case, **direct feature extraction from a CNN backbone into the ViT encoder performed better** than distillation. The CNN features provided a stronger inductive bias, leading to improved generalization without extra complexity.
 ---
 
 ## 📊 Summary of Results
