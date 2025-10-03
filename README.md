@@ -1,11 +1,8 @@
-# Q1 – Vision Transformer Experiments on CIFAR-10 🧠
-
-This project documents a series of **systematic experiments conducted on CIFAR-10** to explore the **training dynamics and performance behavior of Vision Transformers (ViTs)** and their hybrid variants.  
-The primary objective was **not** to achieve state-of-the-art results, but to understand **how different architectural and training modifications influence model performance** under limited compute.
+# Q1 – Vision Transformer Experiments on CIFAR-10 
 
 ---
 
-## 1️⃣ Baseline ViT
+## 1️ Baseline ViT
 
 - Implemented a **custom Vision Transformer** from scratch:
   - Patch embedding
@@ -18,7 +15,7 @@ The primary objective was **not** to achieve state-of-the-art results, but to un
 
 ---
 
-## 2️⃣ Data Augmentation & Regularization
+## 2️ Data Augmentation & Regularization
 
 - Techniques used:
   - **Mixup** and **CutMix**
@@ -29,7 +26,7 @@ The primary objective was **not** to achieve state-of-the-art results, but to un
 
 ---
 
-## 3️⃣ Hybrid CNN + Transformer
+## 3️ Hybrid CNN + Transformer
 
 - Replaced patch embedding with a **Basic CNN** to extract features.
 - Fed resulting feature maps into a Transformer encoder (PyTorch).
@@ -38,7 +35,7 @@ The primary objective was **not** to achieve state-of-the-art results, but to un
 
 ---
 
-## 4️⃣ Explicit Transformer Implementation
+## 4️ Explicit Transformer Implementation
 
 - Replaced built-in Transformer API with **manually coded attention and MLP blocks**, mirroring the original ViT paper.
 - Included **Pre-Norm**, learnable γ scaling, and careful residual handling.
@@ -47,7 +44,7 @@ The primary objective was **not** to achieve state-of-the-art results, but to un
 
 ---
 
-## 🌟 Knowledge Distillation
+##  Knowledge Distillation
 
 - **Teacher:** ResNet-18 trained on CIFAR-10  
 - **Student:** ViT  
@@ -67,7 +64,7 @@ Direct feature extraction from a CNN backbone (ResNet) into a Transformer encode
 
 ---
 
-## 🔑 Key Takeaways
+##  Key Takeaways
 
 - **Patch size** strongly affects compute vs. accuracy trade-offs.
 - Vanilla ViT struggles to exceed 80% without strong regularization or supervision.
@@ -77,13 +74,13 @@ Direct feature extraction from a CNN backbone (ResNet) into a Transformer encode
 
 ---
 
-# Q2 – Text-Prompted Object Segmentation with CLIPSeg and SAM 2 🧠🎯
+# Q2 – Text-Prompted Object Segmentation with CLIPSeg and SAM 2 
 
 This notebook demonstrates **text-driven object segmentation** by combining **CLIPSeg** for coarse localization with **SAM 2** for precise mask refinement.
 
 ---
 
-## 🧭 Pipeline Overview
+##  Pipeline Overview
 
 1. **Setup**  
    Installs necessary libraries and dependencies.
@@ -108,7 +105,7 @@ This notebook demonstrates **text-driven object segmentation** by combining **CL
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 - **CLIPSeg Accuracy**: Initial heatmap may be coarse; impacts SAM 2 quality.
 - **Threshold Sensitivity**: Threshold may need manual tuning to avoid empty masks or background noise.
