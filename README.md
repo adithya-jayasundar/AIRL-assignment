@@ -49,7 +49,7 @@ However, the **student model only achieved 86% accuracy**, whereas the **hybrid 
 **Observation:** In this case, **direct feature extraction from a CNN backbone into the ViT encoder performed better** than distillation. The CNN features provided a stronger inductive bias, leading to improved generalization without extra complexity.
 ---
 
-## 📊 Summary of Results
+## Summary of Results
 
 | Experiment                          | Accuracy |
 |--------------------------------------|----------|
@@ -61,7 +61,7 @@ However, the **student model only achieved 86% accuracy**, whereas the **hybrid 
 
 ---
 
-## ✨ Key Insights
+## Key Insights
 
 - **Patch size** affects both compute and accuracy — there’s a sweet spot for small datasets like CIFAR-10.  
 - Standard ViT struggles to go beyond ~80% without strong regularization or supervision.  
