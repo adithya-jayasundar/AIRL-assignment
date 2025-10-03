@@ -1,72 +1,121 @@
-#  Q1 ViT
+# Q1 – Vision Transformer Experiments on CIFAR-10 🧠
 
-Documents a series of systematic experiments conducted on CIFAR-10 to understand the training dynamics and performance behavior of Vision Transformers (ViTs) and their hybrid variants. The objective was not to reach state-of-the-art accuracy, but to explore **how different architectural and training modifications influence model performance** under limited compute.
-
----
-
-## 1️ Baseline ViT
-
-- Implemented a **custom Vision Transformer** from scratch: patch embedding, positional embeddings, class token, and Transformer encoder blocks with pre-layer normalization and learnable gamma scaling.  
-- Trained with standard AdamW and cosine learning rate schedule.  
-- **Accuracy:** ~80%  
-- **Observation:** Training was stable, but accuracy plateaued early. Smaller patch sizes increased compute cost but didn’t yield consistent accuracy improvements.
+This project documents a series of **systematic experiments conducted on CIFAR-10** to explore the **training dynamics and performance behavior of Vision Transformers (ViTs)** and their hybrid variants.  
+The primary objective was **not** to achieve state-of-the-art results, but to understand **how different architectural and training modifications influence model performance** under limited compute.
 
 ---
 
-## 2️ Data Augmentation & Regularization
+## 1️⃣ Baseline ViT
 
-- Added **Mixup** and **CutMix** per batch.  
-- Used **RandomCrop**, **RandomHorizontalFlip**, **ColorJitter**, and **RandomErasing**.  
-- Introduced **DropPath (stochastic depth)** and label smoothing.  
-- **Accuracy:** Slight improvement over baseline (~82–83%).  
-- **Observation:** These regularization techniques stabilized training and improved generalization, but the **loss consistently oscillated around 1.2**, indicating a plateau.
-
----
-
-## 3️ Hybrid CNN + Transformer
-
-- Replaced the patch embedding with a **ResNet-18 backbone** to extract convolutional features.  
-- Fed the resulting feature maps into a Transformer encoder (PyTorch implementation).  
-- **Accuracy:** ~82%  
-- **Observation:** CNN features helped representation, but did not dramatically surpass the ViT baseline. The hybrid architecture slightly improved stability but the loss curve showed similar plateau behavior.
+- Implemented a **custom Vision Transformer** from scratch:
+  - Patch embedding
+  - Positional embeddings
+  - Class token
+  - Transformer encoder blocks with pre-layer normalization and learnable gamma scaling
+- Trained using **AdamW** and a **cosine learning rate schedule**.
+- **Accuracy:** ~80%
+- **Observation:** Training was stable but accuracy plateaued early. Smaller patch sizes increased compute cost but didn’t consistently improve accuracy.
 
 ---
 
-## 4️ Explicit Transformer Implementation
+## 2️⃣ Data Augmentation & Regularization
 
-- Replaced the built-in Transformer API with **manually coded attention and MLP blocks**, closely following the original ViT paper structure.  
-- Incorporated **Pre-Norm**, learnable scaling (γ), and residual connections carefully.  
-- **Accuracy:** Similar to hybrid model (~83–84%), but allowed **more controlled experimentation** with block design.
-
----
-
-###  Knowledge Distillation
-
-I experimented with **knowledge distillation** using a **ResNet-18 teacher** trained on CIFAR-10 and a **ViT student**. The training used a combination of **KL divergence** and **cross-entropy loss** with temperature scaling.
-
-However, the **student model only achieved 86% accuracy**, whereas the **hybrid CNN+ViT feature mapping approach** reached **87% accuracy**.
-
-**Observation:** In this case, **direct feature extraction from a CNN backbone into the ViT encoder performed better** than distillation. The CNN features provided a stronger inductive bias, leading to improved generalization without extra complexity.
----
-
-## Summary of Results
-
-| Experiment                          | Accuracy |
-|--------------------------------------|----------|
-| Baseline ViT                         | ~80%     |
-| + Regularization & Augmentations     | 82–83%   |
-| Hybrid CNN + Transformer             | ~82%     |
-| Explicit Transformer Implementation  | 83–84%   |
-| Knowledge Distillation               | **~86%** |
+- Techniques used:
+  - **Mixup** and **CutMix**
+  - **RandomCrop**, **RandomHorizontalFlip**, **ColorJitter**, **RandomErasing**
+  - **DropPath (stochastic depth)** and label smoothing
+- **Accuracy:** 82–83%
+- **Observation:** These techniques stabilized training and improved generalization. However, **loss oscillated around 1.2**, indicating a plateau.
 
 ---
 
-## Key Insights
+## 3️⃣ Hybrid CNN + Transformer
 
-- **Patch size** affects both compute and accuracy — there’s a sweet spot for small datasets like CIFAR-10.  
-- Standard ViT struggles to go beyond ~80% without strong regularization or supervision.  
-- Adding a CNN stem provides moderate benefits but doesn’t fundamentally solve optimization plateaus.  
-- Knowledge distillation is the most impactful technique among the ones tried, significantly improving performance with minimal student-side changes.
+- Replaced patch embedding with a **Basic CNN** to extract features.
+- Fed resulting feature maps into a Transformer encoder (PyTorch).
+- **Accuracy:** ~82%
+- **Observation:** CNN features improved representation but didn’t dramatically outperform baseline. Slightly better stability.
 
 ---
+
+## 4️⃣ Explicit Transformer Implementation
+
+- Replaced built-in Transformer API with **manually coded attention and MLP blocks**, mirroring the original ViT paper.
+- Included **Pre-Norm**, learnable γ scaling, and careful residual handling.
+- **Accuracy:** 83–84%
+- **Benefit:** Enabled controlled experimentation with block designs.
+
+---
+
+## 🌟 Knowledge Distillation
+
+- **Teacher:** ResNet-18 trained on CIFAR-10  
+- **Student:** ViT  
+- Training used **KL divergence + Cross-Entropy loss** with temperature scaling.
+
+| Method                                | Accuracy |
+|----------------------------------------|----------|
+| Baseline ViT                           | ~80%     |
+| + Regularization & Augmentations       | 82–83%   |
+| Basic CNN + Transformer               | ~82%     |
+| Explicit Transformer Implementation    | 83–84%   |
+| Knowledge Distillation (ResNet → ViT)  | 86%      |
+| ResNet Backbone + Transformer         | 87%      |
+
+**Key Insight:**  
+Direct feature extraction from a CNN backbone (ResNet) into a Transformer encoder **outperformed knowledge distillation** in this setup, achieving **~87% accuracy**.
+
+---
+
+## 🔑 Key Takeaways
+
+- **Patch size** strongly affects compute vs. accuracy trade-offs.
+- Vanilla ViT struggles to exceed 80% without strong regularization or supervision.
+- CNN + ViT hybrids offer moderate gains but don’t solve optimization plateaus alone.
+- Knowledge distillation helps but may need longer training for full effect.
+- **ResNet + Transformer hybrid achieved the best accuracy** among all experiments.
+
+---
+
+# Q2 – Text-Prompted Object Segmentation with CLIPSeg and SAM 2 🧠🎯
+
+This notebook demonstrates **text-driven object segmentation** by combining **CLIPSeg** for coarse localization with **SAM 2** for precise mask refinement.
+
+---
+
+## 🧭 Pipeline Overview
+
+1. **Setup**  
+   Installs necessary libraries and dependencies.
+
+2. **Load Image**  
+   Allows image loading via file upload or URL.
+
+3. **User Input**  
+   Accepts a **text prompt** specifying the object to segment.
+
+4. **CLIPSeg Segmentation**  
+   Generates an **initial heatmap** highlighting regions likely to contain the prompted object.
+
+5. **Threshold Heatmap**  
+   Converts the heatmap into a **binary mask** using a configurable threshold, producing a coarse segmentation.
+
+6. **SAM 2 Segmentation**  
+   Uses the CLIPSeg mask or bounding box as a **prompt** for SAM 2, which refines the segmentation to produce a high-quality mask.
+
+7. **Display Results**  
+   Overlays the final SAM 2 mask on the original image for visualization.
+
+---
+
+## ⚠️ Known Limitations
+
+- **CLIPSeg Accuracy**: Initial heatmap may be coarse; impacts SAM 2 quality.
+- **Threshold Sensitivity**: Threshold may need manual tuning to avoid empty masks or background noise.
+- **Prompt Dependency**: Poor CLIPSeg mask → poor SAM 2 refinement.
+- **Single Object Only**: Current version handles only **one text prompt / object**.
+
+
+---
+
 
